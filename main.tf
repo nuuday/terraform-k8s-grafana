@@ -112,7 +112,7 @@ resource "aws_security_group" "grafana_rds" {
 
 resource "random_password" "grafana_db_password" {
   length  = 16
-  special = true
+  special = false
 }
 
 module "db" {
