@@ -5,7 +5,9 @@ locals {
   release_name  = "grafana"
   namespace     = var.namespace
   repository    = "https://kubernetes-charts.storage.googleapis.com"
-  bucket_name   = "grafana-${data.aws_caller_identity.grafana.account_id}"
+  bucket_prefix   = "grafana"
+  bucket_name    = module.s3_bucket.this_s3_bucket_id
+  role_name      = local.bucket_name
   provider_url  = replace(var.oidc_provider_issuer_url, "https://", "")
 
   values = {
@@ -35,7 +37,6 @@ locals {
         enabled               = true
         allow_sign_up         = true
         client_id             = var.oauth_github_client_id
-        client_secret         = var.oauth_github_client_secret
         scopes                = "user:email,read:org"
         auth_url              = "https://github.com/login/oauth/authorize"
         token_url             = "https://github.com/login/oauth/access_token"
@@ -45,7 +46,7 @@ locals {
       }
       "external_image_storage.s3" = {
         bucket = local.bucket_name
-        region = data.aws_region.grafana.name
+        region = module.s3_bucket.this_s3_bucket_region
       }
     }
   }
@@ -73,7 +74,7 @@ data "aws_iam_policy_document" "grafana" {
       "s3:PutObject",
       "s3:GetObject"
     ]
-    resources = [module.grafana_s3_bucket.this_s3_bucket_arn, "${module.grafana_s3_bucket.this_s3_bucket_arn}/*"]
+    resources = [module.s3_bucket.this_s3_bucket_arn, "${module.s3_bucket.this_s3_bucket_arn}/*"]
   }
 }
 
@@ -85,10 +86,10 @@ resource "aws_iam_role_policy" "grafana" {
 }
 
 
-module "grafana_s3_bucket" {
+module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket_prefix = local.bucket_name
+  bucket_prefix = local.bucket_prefix
   acl           = "private"
   force_destroy = true
   versioning = {
@@ -105,7 +106,7 @@ resource "random_id" "grafana_rds" {
 }
 
 resource "aws_security_group" "grafana_rds" {
-  name_prefix = "grafana_rds"
+  name_prefix = "grafana-rds"
   vpc_id      = var.vpc_id
 }
 
@@ -163,6 +164,7 @@ resource "kubernetes_secret" "grafana" {
   }
   data = {
     GF_DATABASE_PASSWORD = module.db.this_db_instance_password
+    GF_AUTH_GITHUB_CLIENT_SECRET = var.oauth_github_client_secret
   }
 }
 

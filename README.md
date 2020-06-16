@@ -2,7 +2,18 @@
 Grafana module for terraform. Grafana has been configured with GitHub Oauth support, and external image store using S3
 
 ## Usage
+```
+module "grafana" {
+  source = "github.com/nuuday/terraform-aws-kubernetes-grafana"
 
+  database_subnets           = [ "database", "subnets" ]
+  oauth_github_client_id     = "github-client-id"
+  oauth_github_client_secret = "github-client-secret"
+  oidc_provider_issuer_url   = ""
+  source_security_group      = "security group source for connecting to the database"
+  vpc_id                     = "VPC id"
+}
+```
 
 ## Contributing
 
