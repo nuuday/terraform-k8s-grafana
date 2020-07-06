@@ -81,8 +81,7 @@ module "iam" {
   role_name                     = "${local.release_name}-irsa-${random_id.grafana_rds.dec}"
   provider_url                  = local.provider_url
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.namespace}:${local.release_name}"]
-
-  tags = var.tags
+  tags                          = var.tags
 }
 
 data "aws_iam_policy_document" "grafana" {

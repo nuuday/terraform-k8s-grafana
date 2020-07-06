@@ -1,4 +1,4 @@
-# Project Title
+# Grafana running on Kubernetes with RDS and S3 backend
 Grafana module for terraform. Grafana has been configured with GitHub Oauth support, and external image store using S3
 
 ## Usage
