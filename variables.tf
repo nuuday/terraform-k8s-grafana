@@ -86,3 +86,27 @@ variable "oauth_auto_login" {
   description = "OAuth auto login"
   type        = bool
 }
+
+variable "ingress_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable or disable creation of ingress resources"
+}
+
+variable "ingress_host" {
+  type        = string
+  default     = ""
+  description = "Ingress hostname"
+}
+
+variable "ingress_cluster_issuer" {
+  type        = string
+  default     = "letsencrypt"
+  description = "Cert-manager cluster issuer"
+}
+
+variable "ingress_class" {
+  type        = string
+  default     = "nginx"
+  description = "Ingress class"
+}

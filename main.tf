@@ -1,16 +1,29 @@
-
 locals {
   chart_name    = "grafana"
   chart_version = var.chart_version
   release_name  = "grafana"
   namespace     = var.namespace
   repository    = "https://kubernetes-charts.storage.googleapis.com"
-  bucket_prefix   = "grafana"
-  bucket_name    = module.s3_bucket.this_s3_bucket_id
-  role_name      = local.bucket_name
+  bucket_prefix = "grafana"
+  bucket_name   = module.s3_bucket.this_s3_bucket_id
+  role_name     = local.bucket_name
   provider_url  = replace(var.oidc_provider_issuer_url, "https://", "")
 
   values = {
+    ingress = {
+      enabled = var.ingress_enabled
+      hosts   = [var.ingress_host]
+      annotations = {
+        "kubernetes.io/ingress.class" : var.ingress_class
+        "cert-manager.io/cluster-issuer" : var.ingress_cluster_issuer
+      }
+      tls = [
+        {
+          hosts      = [var.ingress_host]
+          secretName = "grafana-ingress-cert"
+        }
+      ]
+    }
     envFromSecret = kubernetes_secret.grafana.metadata[0].name
     serviceAccount = {
       annotations = {
@@ -19,6 +32,11 @@ locals {
     }
     plugins = []
     "grafana.ini" = {
+      server = {
+        domain         = var.ingress_host
+        root_url       = "https://${var.ingress_host}"
+        enforce_domain = true
+      }
       database = {
         type     = "postgres"
         host     = "${module.db.this_db_instance_address}:${module.db.this_db_instance_port}"
@@ -163,7 +181,7 @@ resource "kubernetes_secret" "grafana" {
     namespace = kubernetes_namespace.grafana.metadata[0].name
   }
   data = {
-    GF_DATABASE_PASSWORD = module.db.this_db_instance_password
+    GF_DATABASE_PASSWORD         = module.db.this_db_instance_password
     GF_AUTH_GITHUB_CLIENT_SECRET = var.oauth_github_client_secret
   }
 }
