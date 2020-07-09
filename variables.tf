@@ -93,10 +93,16 @@ variable "ingress_enabled" {
   description = "Enable or disable creation of ingress resources"
 }
 
-variable "ingress_host" {
-  type        = string
-  default     = ""
-  description = "Ingress hostname"
+variable "ingress_hostnames" {
+  type        = list(string)
+  default     = []
+  description = "Ingress hostnames"
+}
+
+variable "root_domain" {
+  type = string
+  default = ""
+  description = "Root url for OAUTH authentication"
 }
 
 variable "ingress_cluster_issuer" {

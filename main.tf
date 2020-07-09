@@ -12,14 +12,14 @@ locals {
   values = {
     ingress = {
       enabled = var.ingress_enabled
-      hosts   = [var.ingress_host]
+      hosts   = var.ingress_hostnames
       annotations = {
         "kubernetes.io/ingress.class" : var.ingress_class
         "cert-manager.io/cluster-issuer" : var.ingress_cluster_issuer
       }
       tls = [
         {
-          hosts      = [var.ingress_host]
+          hosts      = var.ingress_hostnames
           secretName = "grafana-ingress-cert"
         }
       ]
@@ -33,8 +33,8 @@ locals {
     plugins = []
     "grafana.ini" = {
       server = {
-        domain         = var.ingress_host
-        root_url       = "https://${var.ingress_host}"
+        domain         = var.root_domain
+        root_url       = "https://${var.root_domain}"
         enforce_domain = true
       }
       database = {
