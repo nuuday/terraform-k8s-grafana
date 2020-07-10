@@ -68,7 +68,6 @@ locals {
       }
     }
   }
-
 }
 
 data aws_region "grafana" {}
