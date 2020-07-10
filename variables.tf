@@ -100,8 +100,8 @@ variable "ingress_hostnames" {
 }
 
 variable "root_domain" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Root url for OAUTH authentication"
 }
 
