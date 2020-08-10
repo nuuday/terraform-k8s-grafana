@@ -9,6 +9,37 @@ locals {
   role_name     = local.bucket_name
   provider_url  = replace(var.oidc_provider_issuer_url, "https://", "")
 
+  grafana_ini = {
+    server = {
+      domain         = var.root_domain
+      root_url       = "https://${var.root_domain}"
+      enforce_domain = true
+    }
+
+    database = {
+      type     = "postgres"
+      host     = "${module.db.this_db_instance_address}:${module.db.this_db_instance_port}"
+      name     = "grafana"
+      user     = module.db.this_db_instance_username
+      ssl_mode = "require"
+    }
+
+    auth = {
+      disable_login_form = var.auth_disable_login_form
+      oauth_auto_login   = var.oauth_auto_login
+    }
+
+    "auth.basic" = {
+      enabled = var.auth_enable_basic
+    }
+
+    "external_image_storage.s3" = {
+      bucket = local.bucket_name
+      region = module.s3_bucket.this_s3_bucket_region
+    }
+  }
+
+
   values = {
     ingress = {
       enabled = var.ingress_enabled
@@ -37,47 +68,7 @@ locals {
 
     plugins = []
 
-    "grafana.ini" = {
-      server = {
-        domain         = var.root_domain
-        root_url       = "https://${var.root_domain}"
-        enforce_domain = true
-      }
-
-      database = {
-        type     = "postgres"
-        host     = "${module.db.this_db_instance_address}:${module.db.this_db_instance_port}"
-        name     = "grafana"
-        user     = module.db.this_db_instance_username
-        ssl_mode = "require"
-      }
-
-      auth = {
-        disable_login_form = var.auth_disable_login_form
-        oauth_auto_login   = var.oauth_auto_login
-      }
-
-      "auth.basic" = {
-        enabled = var.auth_enable_basic
-      }
-
-      "auth.github" = {
-        enabled               = true
-        allow_sign_up         = true
-        client_id             = var.oauth_github_client_id
-        scopes                = "user:email,read:org"
-        auth_url              = "https://github.com/login/oauth/authorize"
-        token_url             = "https://github.com/login/oauth/access_token"
-        api_url               = "https://api.github.com/user"
-        team_ids              = join(",", var.oauth_github_team_ids)
-        allowed_organizations = join(",", var.oauth_github_organizations)
-      }
-
-      "external_image_storage.s3" = {
-        bucket = local.bucket_name
-        region = module.s3_bucket.this_s3_bucket_region
-      }
-    }
+    "grafana.ini" = merge(local.grafana_ini, var.oauth_config)
   }
 }
 
@@ -196,7 +187,6 @@ resource "kubernetes_secret" "grafana" {
 
   data = {
     GF_DATABASE_PASSWORD         = module.db.this_db_instance_password
-    GF_AUTH_GITHUB_CLIENT_SECRET = var.oauth_github_client_secret
   }
 }
 

@@ -49,26 +49,9 @@ variable "database_storage_size" {
   type        = number
 }
 
-variable "oauth_github_client_id" {
-  description = "Github OAUTH client id"
-  type        = string
-}
-
-variable "oauth_github_client_secret" {
-  description = "Github OAUTH client secret"
-  type        = string
-}
-
-variable "oauth_github_team_ids" {
-  description = "Limit access to Grafan from the following teams"
-  type        = list(number)
-  default     = []
-}
-
-variable "oauth_github_organizations" {
-  description = "Limit access to Grafana from the following organizations"
-  type        = list(string)
-  default     = ["nuuday"]
+variable "oauth_config" {
+  description = "OAuth configuration map for grafana.ini. E.g. `{ auth.github = { ... } }`. See https://grafana.com/docs/grafana/latest/auth/overview/ for a complete list of possible properties for each provider."
+  default     = {}
 }
 
 variable "auth_enable_basic" {
