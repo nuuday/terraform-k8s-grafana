@@ -13,10 +13,12 @@ locals {
     ingress = {
       enabled = var.ingress_enabled
       hosts   = var.ingress_hostnames
+
       annotations = {
         "kubernetes.io/ingress.class" : var.ingress_class
         "cert-manager.io/cluster-issuer" : var.ingress_cluster_issuer
       }
+
       tls = [
         {
           hosts      = var.ingress_hostnames
@@ -24,19 +26,24 @@ locals {
         }
       ]
     }
+
     envFromSecret = kubernetes_secret.grafana.metadata[0].name
+
     serviceAccount = {
       annotations = {
         "eks.amazonaws.com/role-arn" = module.iam.this_iam_role_arn
       }
     }
+
     plugins = []
+
     "grafana.ini" = {
       server = {
         domain         = var.root_domain
         root_url       = "https://${var.root_domain}"
         enforce_domain = true
       }
+
       database = {
         type     = "postgres"
         host     = "${module.db.this_db_instance_address}:${module.db.this_db_instance_port}"
@@ -44,13 +51,16 @@ locals {
         user     = module.db.this_db_instance_username
         ssl_mode = "require"
       }
+
       auth = {
         disable_login_form = var.auth_disable_login_form
         oauth_auto_login   = var.oauth_auto_login
       }
+
       "auth.basic" = {
         enabled = var.auth_enable_basic
       }
+
       "auth.github" = {
         enabled               = true
         allow_sign_up         = true
@@ -62,6 +72,7 @@ locals {
         team_ids              = join(",", var.oauth_github_team_ids)
         allowed_organizations = join(",", var.oauth_github_organizations)
       }
+
       "external_image_storage.s3" = {
         bucket = local.bucket_name
         region = module.s3_bucket.this_s3_bucket_region
@@ -90,6 +101,7 @@ data "aws_iam_policy_document" "grafana" {
       "s3:PutObject",
       "s3:GetObject"
     ]
+
     resources = [module.s3_bucket.this_s3_bucket_arn, "${module.s3_bucket.this_s3_bucket_arn}/*"]
   }
 }
@@ -101,16 +113,17 @@ resource "aws_iam_role_policy" "grafana" {
   policy = data.aws_iam_policy_document.grafana.json
 }
 
-
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
   bucket_prefix = local.bucket_prefix
   acl           = "private"
   force_destroy = true
+
   versioning = {
     enabled = false
   }
+
   tags = var.tags
 }
 
@@ -118,6 +131,7 @@ resource "random_id" "grafana_rds" {
   keepers = {
     release_name = local.release_name
   }
+
   byte_length = 10
 }
 
@@ -173,11 +187,13 @@ resource "kubernetes_namespace" "grafana" {
     name = local.namespace
   }
 }
+
 resource "kubernetes_secret" "grafana" {
   metadata {
     name      = "${local.release_name}-credentials"
     namespace = kubernetes_namespace.grafana.metadata[0].name
   }
+
   data = {
     GF_DATABASE_PASSWORD         = module.db.this_db_instance_password
     GF_AUTH_GITHUB_CLIENT_SECRET = var.oauth_github_client_secret
@@ -196,26 +212,32 @@ resource "kubernetes_job" "grafana_createdb" {
           "sidecar.istio.io/inject" = "false"
         }
       }
+
       spec {
         container {
           name  = "grafana-createdb"
           image = "postgres:alpine"
+
           env {
             name  = "PGHOST"
             value = module.db.this_db_instance_address
           }
+
           env {
             name  = "PGPORT"
             value = module.db.this_db_instance_port
           }
+
           env {
             name  = "PGDATABASE"
             value = "postgres"
           }
+
           env {
             name  = "PGUSER"
             value = module.db.this_db_instance_username
           }
+
           env {
             name = "PGPASSWORD"
             value_from {
@@ -225,6 +247,7 @@ resource "kubernetes_job" "grafana_createdb" {
               }
             }
           }
+
           command = ["/bin/sh", "-c", "psql -tc \"SELECT 1 FROM pg_database WHERE datname = 'grafana'\" | grep -q 1 || psql -c 'CREATE DATABASE grafana'"]
         }
       }
@@ -242,5 +265,4 @@ resource "helm_release" "grafana-deploy" {
 
   wait   = true
   values = [yamlencode(local.values)]
-
 }
