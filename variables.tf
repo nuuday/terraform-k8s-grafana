@@ -44,7 +44,7 @@ variable "source_security_group" {
 }
 
 variable "database_storage_size" {
-  description = "Disk space to allocation for RDS instance"
+  description = "Disk space in GB to allocation for RDS instance"
   default     = 5
   type        = number
 }
@@ -90,7 +90,7 @@ variable "oauth_auto_login" {
 variable "ingress_enabled" {
   type        = bool
   default     = false
-  description = "Enable or disable creation of ingress resources"
+  description = "Enable or disable creation of Ingress resources"
 }
 
 variable "ingress_hostnames" {
@@ -102,7 +102,7 @@ variable "ingress_hostnames" {
 variable "root_domain" {
   type        = string
   default     = ""
-  description = "Root url for OAUTH authentication"
+  description = "Root URL for OAuth 2.0 authentication"
 }
 
 variable "ingress_cluster_issuer" {
