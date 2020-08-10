@@ -162,7 +162,6 @@ module "db" {
   deletion_protection             = false
 }
 
-
 resource "aws_security_group_rule" "grafana-cluster-rules" {
   from_port                = 0
   protocol                 = "tcp"
@@ -172,8 +171,11 @@ resource "aws_security_group_rule" "grafana-cluster-rules" {
   source_security_group_id = var.source_security_group
 }
 
+data "kubernetes_all_namespaces" "all" {}
 
 resource "kubernetes_namespace" "grafana" {
+  count = contains(data.kubernetes_all_namespaces.all.namespaces, local.namespace) ? 0 : 1
+
   metadata {
     name = local.namespace
   }
@@ -182,19 +184,22 @@ resource "kubernetes_namespace" "grafana" {
 resource "kubernetes_secret" "grafana" {
   metadata {
     name      = "${local.release_name}-credentials"
-    namespace = kubernetes_namespace.grafana.metadata[0].name
+    namespace = local.namespace
   }
 
   data = {
-    GF_DATABASE_PASSWORD         = module.db.this_db_instance_password
+    GF_DATABASE_PASSWORD = module.db.this_db_instance_password
   }
+
+  depends_on = [kubernetes_namespace.grafana]
 }
 
 resource "kubernetes_job" "grafana_createdb" {
   metadata {
     name      = "grafana-createdb"
-    namespace = kubernetes_namespace.grafana.metadata[0].name
+    namespace = local.namespace
   }
+
   spec {
     template {
       metadata {
@@ -243,6 +248,8 @@ resource "kubernetes_job" "grafana_createdb" {
       }
     }
   }
+
+  depends_on = [kubernetes_namespace.grafana]
 }
 
 resource "helm_release" "grafana-deploy" {
@@ -250,9 +257,11 @@ resource "helm_release" "grafana-deploy" {
   chart            = local.chart_name
   version          = local.chart_version
   repository       = local.repository
-  namespace        = kubernetes_job.grafana_createdb.metadata[0].namespace
+  namespace        = local.namespace
   create_namespace = true
 
   wait   = true
   values = [yamlencode(local.values)]
+
+  depends_on = [kubernetes_namespace.grafana]
 }
