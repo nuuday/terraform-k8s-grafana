@@ -70,6 +70,11 @@ variable "oauth_auto_login" {
   type        = bool
 }
 
+variable "datasources" {
+  description = "List of data sources to put into Grafana. See https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources for examples."
+  default     = []
+}
+
 variable "ingress_enabled" {
   type        = bool
   default     = false

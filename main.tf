@@ -68,6 +68,13 @@ locals {
 
     plugins = []
 
+    datasources = {
+      "datasources.yaml" = {
+        apiVersion = 1
+        datasources: var.datasources
+      }
+    }
+
     "grafana.ini" = merge(local.grafana_ini, var.oauth_config)
   }
 }
