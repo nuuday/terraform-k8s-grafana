@@ -112,6 +112,13 @@ resource "aws_iam_role_policy" "grafana" {
   policy = data.aws_iam_policy_document.grafana.json
 }
 
+resource "aws_iam_role_policy_attachment" "additional" {
+  count = length(var.additional_irsa_role_policy_arns)
+
+  role       = module.iam.this_iam_role_name
+  policy_arn = var.additional_irsa_role_policy_arns[count.index]
+}
+
 module "s3_bucket" {
   source = "github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v1.10.0"
 
