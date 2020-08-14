@@ -26,6 +26,11 @@ variable "oidc_provider_issuer_url" {
   type        = string
 }
 
+variable "additional_irsa_role_policy_arns" {
+  description = "Additional policy ARNs to attach the Grafana IAM role assumed by Grafana through IRSA."
+  type        = list(string)
+  default     = []
+}
 
 variable "database_subnets" {
   description = "AWS database subnets"
