@@ -193,10 +193,8 @@ resource "aws_security_group_rule" "grafana-cluster-rules" {
   source_security_group_id = var.source_security_group
 }
 
-data "kubernetes_all_namespaces" "all" {}
-
 resource "kubernetes_namespace" "grafana" {
-  count = contains(data.kubernetes_all_namespaces.all.namespaces, local.namespace) ? 0 : 1
+  count = local.namespace == "kube-system" ? 0 : 1
 
   metadata {
     name = local.namespace

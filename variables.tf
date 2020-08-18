@@ -17,7 +17,7 @@ variable "database_instance_type" {
 
 variable "namespace" {
   default     = "grafana"
-  description = "Kubernetes namespace to deploy to"
+  description = "Kubernetes namespace to deploy to. This will fail if the namespace already exists."
   type        = string
 }
 
