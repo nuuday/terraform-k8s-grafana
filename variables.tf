@@ -109,3 +109,8 @@ variable "ingress_class" {
   default     = "nginx"
   description = "Ingress class"
 }
+
+variable "wait" {
+  description = "Whether to wait for the deployment of this helm chart to succeed before completing."
+  default     = true
+}
