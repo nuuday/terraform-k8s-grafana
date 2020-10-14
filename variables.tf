@@ -15,6 +15,12 @@ variable "database_instance_type" {
   type        = string
 }
 
+variable "database_skip_final_snapshot" {
+  default     = true
+  description = "Set to true if you /don't/ want to save user defined graphs when running terraform destroy"
+  type        = bool
+}
+
 variable "namespace" {
   default     = "grafana"
   description = "Kubernetes namespace to deploy to. This will fail if the namespace already exists."

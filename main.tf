@@ -180,7 +180,8 @@ module "db" {
   subnet_ids                      = var.database_subnets
   family                          = "postgres12"
   major_engine_version            = "12"
-  final_snapshot_identifier       = local.release_name
+  skip_final_snapshot             = var.database_skip_final_snapshot
+  final_snapshot_identifier       = "grafana${random_id.grafana_rds.dec}"
   deletion_protection             = false
 }
 
