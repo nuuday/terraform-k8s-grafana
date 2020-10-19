@@ -163,7 +163,7 @@ module "db" {
 
   identifier                      = "grafana${random_id.grafana_rds.dec}"
   engine                          = "postgres"
-  engine_version                  = "12.2"
+  engine_version                  = "12.3"
   instance_class                  = var.database_instance_type
   allocated_storage               = var.database_storage_size
   storage_encrypted               = false
@@ -212,6 +212,14 @@ resource "kubernetes_secret" "grafana" {
   }
 
   depends_on = [kubernetes_namespace.grafana]
+}
+
+data "kubernetes_secret" "grafana_secret" {
+  depends_on = [ helm_release.grafana-deploy ]
+  metadata {
+    namespace = kubernetes_namespace.grafana.metadata[0].name
+    name = "grafana"
+  }
 }
 
 resource "kubernetes_job" "grafana_createdb" {
