@@ -21,6 +21,18 @@ variable "database_skip_final_snapshot" {
   type        = bool
 }
 
+variable "database_final_snapshot_identifier" {
+  default     = "grafana-snapshot"
+  description = "Snapshot saved when running terraform destroy. Please set/rename if you have more clusters using the same RDS"
+  type        = string
+}
+
+variable "database_snapshot_identifier" {
+  default     = null
+  description = "Name of snapshot of database used when applying. Will only work if the snapshot actually exists"
+  type        = string
+}
+
 variable "namespace" {
   default     = "grafana"
   description = "Kubernetes namespace to deploy to. This will fail if the namespace already exists."
