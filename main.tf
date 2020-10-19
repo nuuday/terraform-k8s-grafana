@@ -11,7 +11,7 @@ locals {
   chart_version = var.chart_version
   release_name  = "grafana"
   namespace     = var.namespace
-  repository    = "https://kubernetes-charts.storage.googleapis.com"
+  repository    = "https://grafana.github.io/helm-charts"
   bucket_prefix = "grafana"
   bucket_name   = module.s3_bucket.this_s3_bucket_id
   role_name     = local.bucket_name
@@ -207,9 +207,9 @@ resource "kubernetes_secret" "grafana" {
     namespace = local.namespace
   }
 
-  data = {
+  data = merge({
     GF_DATABASE_PASSWORD = module.db.this_db_instance_password
-  }
+  }, var.config_secrets)
 
   depends_on = [kubernetes_namespace.grafana]
 }
@@ -217,7 +217,7 @@ resource "kubernetes_secret" "grafana" {
 data "kubernetes_secret" "grafana_secret" {
   depends_on = [ helm_release.grafana-deploy ]
   metadata {
-    namespace = kubernetes_namespace.grafana.metadata[0].name
+    namespace = kubernetes_namespace.grafana[0].metadata[0].name
     name = "grafana"
   }
 }

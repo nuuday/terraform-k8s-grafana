@@ -1,5 +1,5 @@
 variable "chart_version" {
-  default     = "5.1.4"
+  default     = "5.7.10"
   description = "Grafana version to install"
   type        = string
 }
@@ -57,6 +57,12 @@ variable "database_storage_size" {
 variable "oauth_config" {
   description = "OAuth configuration map for grafana.ini. E.g. `{ auth.github = { ... } }`. See https://grafana.com/docs/grafana/latest/auth/overview/ for a complete list of possible properties for each provider."
   default     = {}
+}
+
+variable "config_secrets" {
+  description = "Addition configuration parameters that should be passed as a secret"
+  type = map(string)
+  default = {}
 }
 
 variable "auth_enable_basic" {
