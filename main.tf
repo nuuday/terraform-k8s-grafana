@@ -181,7 +181,8 @@ module "db" {
   family                          = "postgres12"
   major_engine_version            = "12"
   skip_final_snapshot             = var.database_skip_final_snapshot
-  final_snapshot_identifier       = "grafana${random_id.grafana_rds.dec}"
+  final_snapshot_identifier       = var.database_final_snapshot_identifier
+  snapshot_identifier             = var.database_snapshot_identifier
   deletion_protection             = false
 }
 
