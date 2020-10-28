@@ -182,6 +182,7 @@ module "db" {
   major_engine_version            = "12"
   final_snapshot_identifier       = local.release_name
   deletion_protection             = false
+  auto_minor_version_upgrade      = var.database_auto_minor_version_upgrade
 }
 
 resource "aws_security_group_rule" "grafana-cluster-rules" {

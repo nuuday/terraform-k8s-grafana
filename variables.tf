@@ -114,3 +114,9 @@ variable "wait" {
   description = "Whether to wait for the deployment of this helm chart to succeed before completing."
   default     = true
 }
+
+variable "database_auto_minor_version_upgrade" {
+  description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window"
+  type        = bool
+  default     = false
+}
