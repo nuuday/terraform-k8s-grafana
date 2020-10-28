@@ -184,6 +184,7 @@ module "db" {
   final_snapshot_identifier       = var.database_final_snapshot_identifier
   snapshot_identifier             = var.database_snapshot_identifier
   deletion_protection             = false
+  auto_minor_version_upgrade      = var.database_auto_minor_version_upgrade
 }
 
 resource "aws_security_group_rule" "grafana-cluster-rules" {
