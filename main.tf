@@ -12,10 +12,6 @@ terraform {
       source = "hashicorp/helm"
       version = "~> 1.3"
     }
-
-    aws        = ">= 3.0, < 4.0"
-    helm       = ">= 1.1"
-    kubernetes = ">= 1.11"
   }
 }
 
