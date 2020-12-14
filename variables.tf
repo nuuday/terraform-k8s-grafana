@@ -144,3 +144,8 @@ variable "database_auto_minor_version_upgrade" {
   type        = bool
   default     = false
 }
+
+variable "chart_values" {
+  type = object({})
+  default = {}
+}

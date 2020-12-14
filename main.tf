@@ -292,7 +292,7 @@ resource "helm_release" "grafana-deploy" {
   create_namespace = true
 
   wait   = var.wait 
-  values = [yamlencode(local.values)]
+  values = [yamlencode(local.values), yamlencode(var.chart_values)]
 
   depends_on = [kubernetes_namespace.grafana]
 }
