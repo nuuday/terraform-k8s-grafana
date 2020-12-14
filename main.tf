@@ -100,7 +100,7 @@ data aws_region "grafana" {}
 data aws_caller_identity "grafana" {}
 
 module "iam" {
-  source = "github.com/terraform-aws-modules/terraform-aws-iam//modules/iam-assumable-role-with-oidc?ref=v2.14.0"
+  source = "github.com/terraform-aws-modules/terraform-aws-iam//modules/iam-assumable-role-with-oidc?ref=v3.6.0"
 
   create_role                   = true
   role_name                     = "${local.release_name}-irsa-${random_id.grafana_rds.dec}"
@@ -136,7 +136,7 @@ resource "aws_iam_role_policy_attachment" "additional" {
 }
 
 module "s3_bucket" {
-  source = "github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v1.10.0"
+  source = "github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v1.17.0"
 
   bucket_prefix = local.bucket_prefix
   acl           = "private"
@@ -168,7 +168,7 @@ resource "random_password" "grafana_db_password" {
 }
 
 module "db" {
-  source = "github.com/terraform-aws-modules/terraform-aws-rds?ref=v2.18.0"
+  source = "github.com/terraform-aws-modules/terraform-aws-rds?ref=v2.20.0"
 
   identifier                      = "grafana${random_id.grafana_rds.dec}"
   engine                          = "postgres"
