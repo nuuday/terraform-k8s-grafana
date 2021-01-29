@@ -210,6 +210,10 @@ resource "kubernetes_namespace" "grafana" {
 
   metadata {
     name = local.namespace
+    labels = {
+      "role/grafana" : "true"
+      "role/system" : "true"
+    }
   }
 }
 
