@@ -210,6 +210,9 @@ resource "kubernetes_namespace" "grafana" {
 
   metadata {
     name = local.namespace
+    annotations = {
+      "ingress-whitelist" = "${var.root_domain}"
+    }
     labels = {
       "role/grafana" : "true"
       "role/system" : "true"
