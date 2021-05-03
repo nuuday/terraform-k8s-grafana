@@ -22,7 +22,7 @@ locals {
   namespace     = var.namespace
   repository    = "https://grafana.github.io/helm-charts"
   bucket_prefix = "grafana"
-  bucket_name   = module.s3_bucket.this_s3_bucket_id
+  bucket_name   = module.s3_bucket.s3_bucket_id
   role_name     = local.bucket_name
   provider_url  = replace(var.oidc_provider_issuer_url, "https://", "")
 
@@ -52,7 +52,7 @@ locals {
 
     "external_image_storage.s3" = {
       bucket = local.bucket_name
-      region = module.s3_bucket.this_s3_bucket_region
+      region = module.s3_bucket.s3_bucket_region
     }
   }
 
@@ -117,7 +117,7 @@ data "aws_iam_policy_document" "grafana" {
       "s3:GetObject"
     ]
 
-    resources = [module.s3_bucket.this_s3_bucket_arn, "${module.s3_bucket.this_s3_bucket_arn}/*"]
+    resources = [module.s3_bucket.s3_bucket_arn, "${module.s3_bucket.s3_bucket_arn}/*"]
   }
 }
 
@@ -136,7 +136,7 @@ resource "aws_iam_role_policy_attachment" "additional" {
 }
 
 module "s3_bucket" {
-  source = "github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v1.17.0"
+  source = "github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v2.0.0"
 
   bucket_prefix = local.bucket_prefix
   acl           = "private"
