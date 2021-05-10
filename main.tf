@@ -1,15 +1,15 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 3.0"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "~> 1.13"
     }
     helm = {
-      source = "hashicorp/helm"
+      source  = "hashicorp/helm"
       version = "~> 2.1"
     }
   }
@@ -88,7 +88,7 @@ locals {
     datasources = {
       "datasources.yaml" = {
         apiVersion = 1
-        datasources: var.datasources
+        datasources : var.datasources
       }
     }
 
@@ -96,8 +96,8 @@ locals {
   }
 }
 
-data aws_region "grafana" {}
-data aws_caller_identity "grafana" {}
+data "aws_region" "grafana" {}
+data "aws_caller_identity" "grafana" {}
 
 module "iam" {
   source = "github.com/terraform-aws-modules/terraform-aws-iam//modules/iam-assumable-role-with-oidc?ref=v3.6.0"
@@ -172,7 +172,7 @@ module "db" {
 
   identifier                      = "grafana${random_id.grafana_rds.dec}"
   engine                          = "postgres"
-  engine_version                  = "12.3"
+  engine_version                  = "12.6"
   instance_class                  = var.database_instance_type
   allocated_storage               = var.database_storage_size
   storage_encrypted               = false
@@ -234,10 +234,10 @@ resource "kubernetes_secret" "grafana" {
 }
 
 data "kubernetes_secret" "grafana_secret" {
-  depends_on = [ helm_release.grafana-deploy ]
+  depends_on = [helm_release.grafana-deploy]
   metadata {
     namespace = kubernetes_namespace.grafana[0].metadata[0].name
-    name = "grafana"
+    name      = "grafana"
   }
 }
 
@@ -307,7 +307,7 @@ resource "helm_release" "grafana-deploy" {
   namespace        = local.namespace
   create_namespace = true
 
-  wait   = var.wait 
+  wait   = var.wait
   values = [yamlencode(local.values), yamlencode(var.chart_values)]
 
   depends_on = [kubernetes_namespace.grafana]
