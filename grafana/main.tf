@@ -27,7 +27,7 @@ locals {
 
     database = {
       type     = "postgres"
-      host     = var.database_host
+      host     = "${var.database_host}:${var.database_port}"
       name     = "grafana"
       user     = var.database_user
       ssl_mode = "require"
