@@ -67,7 +67,7 @@ locals {
     envFromSecret = kubernetes_secret.grafana.metadata[0].name
 
     serviceAccount = {
-      annotations = var.eks_iam_role_arn ? {
+      annotations = var.eks_iam_role_arn != null ? {
         "eks.amazonaws.com/role-arn" = var.eks_iam_role_arn
       } : {}
     }
