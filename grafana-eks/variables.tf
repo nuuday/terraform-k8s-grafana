@@ -1,9 +1,3 @@
-variable "chart_version" {
-  default     = "5.7.10"
-  description = "Grafana version to install"
-  type        = string
-}
-
 variable "vpc_id" {
   description = "VPC ID"
   type        = string
@@ -36,6 +30,12 @@ variable "database_snapshot_identifier" {
 variable "namespace" {
   default     = "grafana"
   description = "Kubernetes namespace to deploy to. This will fail if the namespace already exists."
+  type        = string
+}
+
+variable "release_name" {
+  default     = "grafana"
+  description = "Helm release name"
   type        = string
 }
 
@@ -75,12 +75,6 @@ variable "database_storage_size" {
 variable "oauth_config" {
   description = "OAuth configuration map for grafana.ini. E.g. `{ auth.github = { ... } }`. See https://grafana.com/docs/grafana/latest/auth/overview/ for a complete list of possible properties for each provider."
   default     = {}
-}
-
-variable "config_secrets" {
-  description = "Addition configuration parameters that should be passed as a secret"
-  type = map(string)
-  default = {}
 }
 
 variable "auth_enable_basic" {
