@@ -10,7 +10,7 @@ terraform {
 locals {
   namespace     = var.namespace
   release_name  = var.release_name
-  resource_name = "grafana${random_id.resource_name.dec}"
+  resource_name = random_id.resource_name.hex
 }
 
 data "azurerm_resource_group" "this" {
@@ -27,6 +27,7 @@ resource "random_id" "resource_name" {
     release_name = local.release_name
   }
 
+  prefix      = "grafana"
   byte_length = 10
 }
 
