@@ -56,14 +56,6 @@ resource "azurerm_postgresql_flexible_server" "this" {
   storage_mb = 32768
 }
 
-resource "azurerm_postgresql_database" "this" {
-  name                = "grafana"
-  resource_group_name = data.azurerm_resource_group.this.name
-  server_name         = azurerm_postgresql_flexible_server.this.name
-  charset             = "UTF8"
-  collation           = "en-US"
-}
-
 data "azurerm_public_ip" "external_ips" {
   for_each = toset([for i in var.cluster_outbound_ips : split("/", i)[8]])
 
