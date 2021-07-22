@@ -28,7 +28,7 @@ resource "random_id" "resource_name" {
   }
 
   prefix      = "grafana"
-  byte_length = 10
+  byte_length = 8
 }
 
 resource "random_password" "dbpass" {
