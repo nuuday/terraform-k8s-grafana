@@ -67,7 +67,7 @@ resource "azurerm_postgresql_database" "this" {
   resource_group_name = data.azurerm_resource_group.this.name
   server_name         = azurerm_postgresql_server.this.name
   charset             = "UTF8"
-  collation           = "en_US"
+  collation           = "en-US"
 }
 
 data "azurerm_public_ip" "external_ips" {
