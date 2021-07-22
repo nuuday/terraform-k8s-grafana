@@ -69,12 +69,6 @@ resource "azurerm_postgresql_database" "this" {
   collation           = "en_US"
 }
 
-data "azurerm_subnet" "example" {
-  name                 = "backend"
-  virtual_network_name = "production"
-  resource_group_name  = "networking"
-}
-
 data "azurerm_public_ip" "external_ips" {
   for_each = flatten(data.azurerm_kubernetes_cluster.this.network_profile[*].load_balancer_profile[*].effective_outbound_ips)
 
