@@ -48,12 +48,12 @@ resource "azurerm_postgresql_flexible_server" "this" {
 
   version = "12"
 
-  administrator_login          = random_password.dbuser.result
-  administrator_login_password = random_password.dbpass.result
+  administrator_login    = random_password.dbuser.result
+  administrator_password = random_password.dbpass.result
 
-  sku_name   = "Standard_B1ms"
+  sku_name = "Standard_B1ms"
 
-  public_network_access_enabled    = true
+  public_network_access_enabled = true
 }
 
 resource "azurerm_postgresql_database" "this" {
