@@ -59,7 +59,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
 resource "azurerm_postgresql_database" "this" {
   name                = "grafana"
   resource_group_name = data.azurerm_resource_group.this.name
-  server_name         = azurerm_postgresql_server.this.name
+  server_name         = azurerm_postgresql_flexible_server.this.name
   charset             = "UTF8"
   collation           = "en-US"
 }
@@ -76,7 +76,7 @@ resource "azurerm_postgresql_firewall_rule" "this" {
 
   name                = local.resource_name
   resource_group_name = data.azurerm_resource_group.this.name
-  server_name         = azurerm_postgresql_server.this.name
+  server_name         = azurerm_postgresql_flexible_server.this.name
 
   start_ip_address = each.value.ip_address
   end_ip_address   = each.value.ip_address
@@ -101,7 +101,7 @@ module "grafana" {
 
   namespace                   = local.namespace
   release_name                = local.release_name
-  database_host               = azurerm_postgresql_server.this.fqdn
+  database_host               = azurerm_postgresql_flexible_server.this.fqdn
   database_port               = 5432
   database_password           = random_password.dbpass.result
   database_user               = "${random_password.dbuser.result}@${local.resource_name}"
