@@ -63,12 +63,11 @@ data "azurerm_public_ip" "external_ips" {
   resource_group_name = data.azurerm_kubernetes_cluster.this.node_resource_group
 }
 
-resource "azurerm_postgresql_firewall_rule" "this" {
+resource "azurerm_postgresql_flexible_server_firewall_rule" "this" {
   for_each = data.azurerm_public_ip.external_ips
 
   name                = local.resource_name
-  resource_group_name = data.azurerm_resource_group.this.name
-  server_name         = azurerm_postgresql_flexible_server.this.name
+  server_name         = azurerm_postgresql_flexible_server.this.id
 
   start_ip_address = each.value.ip_address
   end_ip_address   = each.value.ip_address
