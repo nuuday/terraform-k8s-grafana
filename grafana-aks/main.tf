@@ -51,9 +51,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
   administrator_login    = random_password.dbuser.result
   administrator_password = random_password.dbpass.result
 
-  sku_name = "Standard_B1ms"
-
-  public_network_access_enabled = true
+  sku_name = "B_Standard_B1ms"
 }
 
 resource "azurerm_postgresql_database" "this" {
