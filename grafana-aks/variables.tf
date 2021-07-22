@@ -60,10 +60,6 @@ variable "resource_group" {
   description = "Name of the resource group containing the AKS cluster"
   type        = string
 }
-variable "oidc_provider_issuer_url" {
-  description = "Issuer used in the OIDC provider associated with the EKS cluster to support IRSA."
-  type        = string
-}
 
 variable "cluster_name" {
   type = string

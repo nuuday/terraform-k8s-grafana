@@ -11,7 +11,6 @@ locals {
   namespace     = var.namespace
   release_name  = var.release_name
   resource_name = "grafana${random_id.resource_name.dec}"
-  provider_url  = replace(var.oidc_provider_issuer_url, "https://", "")
 }
 
 data "azurerm_resource_group" "this" {
