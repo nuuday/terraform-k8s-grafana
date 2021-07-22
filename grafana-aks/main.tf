@@ -19,7 +19,7 @@ data "azurerm_resource_group" "this" {
 
 data "azurerm_kubernetes_cluster" "this" {
   name                = var.cluster_name
-  resource_group_name = data.azurerm_resource_group.this
+  resource_group_name = data.azurerm_resource_group.this.name
 }
 
 resource "random_id" "resource_name" {
