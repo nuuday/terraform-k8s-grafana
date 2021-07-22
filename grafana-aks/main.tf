@@ -41,25 +41,19 @@ resource "random_password" "dbuser" {
   special = false
 }
 
-resource "azurerm_postgresql_server" "this" {
+resource "azurerm_postgresql_flexible_server" "this" {
   name                = local.resource_name
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
 
-  version = "11"
+  version = "12"
 
   administrator_login          = random_password.dbuser.result
   administrator_login_password = random_password.dbpass.result
 
-  sku_name   = "B_Gen5_1"
-  storage_mb = 5120
-
-  backup_retention_days = 7
-  auto_grow_enabled     = true
+  sku_name   = "Standard_B1ms"
 
   public_network_access_enabled    = true
-  ssl_enforcement_enabled          = true
-  ssl_minimal_tls_version_enforced = "TLS1_2"
 }
 
 resource "azurerm_postgresql_database" "this" {
