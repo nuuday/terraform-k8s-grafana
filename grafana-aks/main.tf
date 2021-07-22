@@ -70,7 +70,7 @@ resource "azurerm_postgresql_database" "this" {
 }
 
 data "azurerm_public_ip" "external_ips" {
-  for_each = toset(var.cluster_outbound_ips)
+  for_each = toset([for i in var.cluster_outbound_ips : split("/", i)[6]])
 
   name                = each.value
   resource_group_name = data.azurerm_kubernetes_cluster.this.node_resource_group
