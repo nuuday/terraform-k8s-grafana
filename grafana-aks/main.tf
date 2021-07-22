@@ -95,7 +95,7 @@ module "grafana" {
   database_host               = azurerm_postgresql_flexible_server.this.fqdn
   database_port               = 5432
   database_password           = random_password.dbpass.result
-  database_user               = "${random_password.dbuser.result}@${local.resource_name}"
+  database_user               = random_password.dbuser.result
   external_image_storage_type = "azure_blob"
   external_image_storage = {
     account_name   = local.resource_name
