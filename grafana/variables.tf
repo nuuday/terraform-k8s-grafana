@@ -120,4 +120,5 @@ variable "chart_values" {
 variable "eks_iam_role_arn" {
   description = "IAM Role ARN with which to annotate SA"
   type        = string
+  default     = null
 }
