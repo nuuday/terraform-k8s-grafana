@@ -57,7 +57,7 @@ resource "azurerm_postgresql_server" "this" {
   backup_retention_days = 7
   auto_grow_enabled     = true
 
-  public_network_access_enabled    = false
+  public_network_access_enabled    = true
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
 }
