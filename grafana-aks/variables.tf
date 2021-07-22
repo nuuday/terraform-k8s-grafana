@@ -64,3 +64,7 @@ variable "resource_group" {
 variable "cluster_name" {
   type = string
 }
+
+variable "cluster_outbound_ips" {
+  type = list(string)
+}

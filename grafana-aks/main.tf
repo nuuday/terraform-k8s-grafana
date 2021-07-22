@@ -70,7 +70,7 @@ resource "azurerm_postgresql_database" "this" {
 }
 
 data "azurerm_public_ip" "external_ips" {
-  for_each = flatten(data.azurerm_kubernetes_cluster.this.network_profile[*].load_balancer_profile[*].effective_outbound_ips)
+  for_each = var.cluster_outbound_ips
 
   name                = each.value
   resource_group_name = data.azurerm_kubernetes_cluster.this.node_resource_group
