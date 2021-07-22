@@ -66,8 +66,8 @@ data "azurerm_public_ip" "external_ips" {
 resource "azurerm_postgresql_flexible_server_firewall_rule" "this" {
   for_each = data.azurerm_public_ip.external_ips
 
-  name                = local.resource_name
-  server_name         = azurerm_postgresql_flexible_server.this.id
+  name      = local.resource_name
+  server_id = azurerm_postgresql_flexible_server.this.id
 
   start_ip_address = each.value.ip_address
   end_ip_address   = each.value.ip_address
