@@ -43,6 +43,10 @@ locals {
     }
 
     "external_image_storage.${var.external_image_storage_type}" = var.external_image_storage
+
+    users = {
+      viewers_can_edit = true
+    }
   }
 
 
