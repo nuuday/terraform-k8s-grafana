@@ -11,6 +11,10 @@ locals {
   namespace     = var.namespace
   release_name  = var.release_name
   resource_name = random_id.resource_name.hex
+
+  # Administrator login must start with a letter, so it is
+  # generated from two parts - a leading letter and an alphanumeric part:
+  administrator_login = "${random_password.dbuser_first.result}${random_password.dbuser_rest.result}"
 }
 
 data "azurerm_resource_group" "this" {
@@ -36,10 +40,17 @@ resource "random_password" "dbpass" {
   special = false
 }
 
-resource "random_password" "dbuser" {
-  length  = 16
+resource "random_password" "dbuser_first" {
+  length  = 1
+  special = false
+  number  = false
+}
+
+resource "random_password" "dbuser_rest" {
+  length  = 15
   special = false
 }
+
 
 resource "azurerm_postgresql_flexible_server" "this" {
   name                = local.resource_name
@@ -48,7 +59,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
 
   version = "12"
 
-  administrator_login    = random_password.dbuser.result
+  administrator_login    = local.administrator_login
   administrator_password = random_password.dbpass.result
 
   sku_name = "B_Standard_B1ms"
@@ -94,8 +105,8 @@ module "grafana" {
   release_name                = local.release_name
   database_host               = azurerm_postgresql_flexible_server.this.fqdn
   database_port               = 5432
+  database_user               = local.administrator_login
   database_password           = random_password.dbpass.result
-  database_user               = random_password.dbuser.result
   external_image_storage_type = "azure_blob"
   external_image_storage = {
     account_name   = local.resource_name
