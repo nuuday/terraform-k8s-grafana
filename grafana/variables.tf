@@ -122,3 +122,9 @@ variable "eks_iam_role_arn" {
   type        = string
   default     = null
 }
+
+variable "plugins" {
+  description = "Plugins in addition to the default ones"
+  type        = list(string)
+  default     = []
+}
