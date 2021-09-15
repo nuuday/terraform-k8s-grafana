@@ -14,7 +14,6 @@ locals {
   bucket_name   = module.s3_bucket.s3_bucket_id
   role_name     = local.bucket_name
   provider_url  = replace(var.oidc_provider_issuer_url, "https://", "")
-  plugins       = ["agenty-flowcharting-panel"]
 }
 
 data "aws_region" "grafana" {}
@@ -148,5 +147,5 @@ module "grafana" {
   root_domain             = var.root_domain
   ingress_enabled         = var.ingress_enabled
   ingress_hostnames       = var.ingress_hostnames
-  plugins                 = local.plugins
+  plugins                 = var.plugins
 }
