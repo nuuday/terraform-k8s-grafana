@@ -76,7 +76,7 @@ locals {
       } : {}
     }
 
-    plugins = []
+    plugins = var.plugins
 
     datasources = {
       "datasources.yaml" = {
