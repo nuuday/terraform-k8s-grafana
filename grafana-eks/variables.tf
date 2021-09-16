@@ -142,3 +142,9 @@ variable "database_auto_minor_version_upgrade" {
 variable "chart_values" {
   default = {}
 }
+
+variable "plugins" {
+  description = "Plugins in addition to the default ones"
+  type        = list(string)
+  default     = []
+}

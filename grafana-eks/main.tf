@@ -147,4 +147,5 @@ module "grafana" {
   root_domain             = var.root_domain
   ingress_enabled         = var.ingress_enabled
   ingress_hostnames       = var.ingress_hostnames
+  plugins                 = var.plugins
 }

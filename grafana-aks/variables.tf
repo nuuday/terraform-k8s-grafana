@@ -68,3 +68,9 @@ variable "cluster_name" {
 variable "cluster_outbound_ips" {
   type = list(string)
 }
+
+variable "plugins" {
+  description = "Plugins in addition to the default ones"
+  type        = list(string)
+  default     = []
+}
