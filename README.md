@@ -4,7 +4,7 @@ Grafana module for terraform. Grafana has been configured with GitHub Oauth supp
 ## Usage
 ```
 module "grafana" {
-  source = "github.com/nuuday/terraform-aws-kubernetes-grafana"
+  source = "github.com/nuuday/terraform-k8s-grafana"
 
   database_subnets           = [ "database", "subnets" ]
   oauth_github_client_id     = "github-client-id"
