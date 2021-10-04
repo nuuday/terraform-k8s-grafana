@@ -36,9 +36,11 @@ resource "random_password" "dbpass" {
   special = false
 }
 
+# PostgreSQL usernames can contain digits, but must start with a letter.
 resource "random_password" "dbuser" {
   length  = 16
   special = false
+  number  = false
 }
 
 resource "azurerm_postgresql_flexible_server" "this" {
@@ -94,8 +96,8 @@ module "grafana" {
   release_name                = local.release_name
   database_host               = azurerm_postgresql_flexible_server.this.fqdn
   database_port               = 5432
-  database_password           = random_password.dbpass.result
   database_user               = random_password.dbuser.result
+  database_password           = random_password.dbpass.result
   external_image_storage_type = "azure_blob"
   external_image_storage = {
     account_name   = local.resource_name
