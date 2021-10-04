@@ -32,7 +32,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Changelog: Create full changelog for commit"
-        uses: nuuday/github-changelog-action@master
+        # uses: nuuday/github-changelog-action@master
+        uses: hcsaustrup/github-changelog-action@fix-segfault-issue
         with:
           next_version: ${{ steps.version.outputs.new_version }}
 
