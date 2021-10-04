@@ -4,8 +4,8 @@ on:
     branches:
       - master
     paths:
-      - '**.tf'
-      - '**.yaml'
+      - "**.tf"
+      - "**.yaml"
 
 jobs:
   release:
@@ -32,8 +32,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Changelog: Create full changelog for commit"
-        # uses: nuuday/github-changelog-action@master
-        uses: hcsaustrup/github-changelog-action@fix-segfault-issue
+        uses: nuuday/github-changelog-action@master
         with:
           next_version: ${{ steps.version.outputs.new_version }}
 
@@ -62,4 +61,3 @@ jobs:
           draft: false
           prerelease: false
           body: ${{ steps.changelog.outputs.changelog }}
-
