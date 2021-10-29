@@ -108,6 +108,12 @@ variable "ingress_class" {
   description = "Ingress class"
 }
 
+variable "ingress_read_timeout" {
+  type = number
+  default = 300
+  description = "Read timeout of ingress, intentionally set high to be able to proxy heavy queries"
+}
+
 variable "wait" {
   description = "Whether to wait for the deployment of this helm chart to succeed before completing."
   default     = true
