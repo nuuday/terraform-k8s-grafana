@@ -109,8 +109,8 @@ variable "ingress_class" {
 }
 
 variable "ingress_read_timeout" {
-  type = number
-  default = 300
+  type        = number
+  default     = 300
   description = "Read timeout of ingress, intentionally set high to be able to proxy heavy queries"
 }
 
