@@ -58,7 +58,7 @@ locals {
       annotations = {
         "kubernetes.io/ingress.class" : var.ingress_class
         "cert-manager.io/cluster-issuer" : var.ingress_cluster_issuer
-        "nginx.ingress.kubernetes.io/proxy-read-timeout" : "${var.ingress_read_timeout}"
+        "nginx.ingress.kubernetes.io/proxy-read-timeout" : tostring(var.ingress_read_timeout)
       }
 
       tls = [
