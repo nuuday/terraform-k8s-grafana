@@ -56,6 +56,12 @@ resource "azurerm_postgresql_flexible_server" "this" {
   sku_name = "B_Standard_B1ms"
 
   storage_mb = 32768
+
+  lifecycle {
+    ignore_changes = [
+      zone,
+    ]
+  }
 }
 
 data "azurerm_public_ip" "external_ips" {
