@@ -92,7 +92,7 @@ module "db" {
 
   identifier                      = "grafana${random_id.grafana_rds.dec}"
   engine                          = "postgres"
-  engine_version                  = "12.6"
+  engine_version                  = "13.6"
   instance_class                  = var.database_instance_type
   allocated_storage               = var.database_storage_size
   storage_encrypted               = false
@@ -107,13 +107,14 @@ module "db" {
   tags                            = var.tags
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   subnet_ids                      = var.database_subnets
-  family                          = "postgres12"
-  major_engine_version            = "12"
+  family                          = "postgres13"
+  major_engine_version            = "13"
   skip_final_snapshot             = var.database_skip_final_snapshot
   final_snapshot_identifier       = var.database_final_snapshot_identifier
   snapshot_identifier             = var.database_snapshot_identifier
   deletion_protection             = false
   auto_minor_version_upgrade      = var.database_auto_minor_version_upgrade
+  allow_major_version_upgrade = true
 }
 
 resource "aws_security_group_rule" "grafana-cluster-rules" {
