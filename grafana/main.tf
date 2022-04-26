@@ -51,6 +51,8 @@ locals {
 
 
   values = {
+    replicas = 2
+
     ingress = {
       enabled = var.ingress_enabled
       hosts   = var.ingress_hostnames
