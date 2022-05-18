@@ -58,9 +58,11 @@ resource "aws_iam_role_policy_attachment" "additional" {
 module "s3_bucket" {
   source = "github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v2.0.0"
 
-  bucket_prefix = local.bucket_prefix
-  acl           = "private"
-  force_destroy = true
+  bucket_prefix       = local.bucket_prefix
+  acl                 = "private"
+  force_destroy       = true
+  block_public_acls   = true
+  block_public_policy = true
 
   versioning = {
     enabled = false
@@ -114,7 +116,7 @@ module "db" {
   snapshot_identifier             = var.database_snapshot_identifier
   deletion_protection             = false
   auto_minor_version_upgrade      = var.database_auto_minor_version_upgrade
-  allow_major_version_upgrade = true
+  allow_major_version_upgrade     = true
 }
 
 resource "aws_security_group_rule" "grafana-cluster-rules" {
