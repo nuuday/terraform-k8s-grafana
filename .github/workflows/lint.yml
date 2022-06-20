@@ -1,0 +1,83 @@
+name: Linting
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, converted_to_draft, ready_for_review]
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  terraform:
+    name: Terraform Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.7
+
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive -diff
+
+      - name: Simple source checks
+        env:
+          PR_IS_DRAFT: "${{ github.event.pull_request.draft }}"
+        run: |
+          # Some checks only trigger warnings when PR is in draft mode
+
+          ERROR_LABEL="ERROR"
+          ERROR_EXITS=true
+
+          if [[ $PR_IS_DRAFT == true ]]; then
+            echo "WARNING: Since this is a DRAFT, ERRORs will be displayed as WARNINGs."
+            ERROR_LABEL="WARNING"
+            ERROR_EXITS=false
+          fi
+
+          echo "Checking trigger words like 'todo' and 'hack':"
+          if grep --color=always -i -E '(todo|hack)' $(find -name "*.tf"); then
+            echo "WARNING: Source contains trigger words."
+          fi
+
+          echo "Checking module source schemes.."
+          if grep --color=always -n -E '^[[:space:]]*source[[:space:]]*=[[:space:]]*"github.com/' $(find -name "*.tf"); then
+            echo "$ERROR_LABEL: Consider using the same scheme git::ssh:// for all git sources."
+            $ERROR_EXITS && exit 1 || true
+          fi
+
+          echo "Checking for illegal module source references.."
+          if grep --color=always -n -E '^[[:space:]]*source[[:space:]]*=[[:space:]]*".*?ref=[^v][^0-9]' $(find -name "*.tf"); then
+            echo "$ERROR_LABEL: Found source references that didn't follow the ?ref=v[0-9] scheme."
+            $ERROR_EXITS && exit 1 || true
+          fi
+
+      - name: "Terraform init and validate"
+        env:
+          AWS_DEFAULT_REGION: eu-central-1
+        run: |
+          umask 077
+          echo '${{ secrets.K8S_BOT_READ_SSH_KEY }}' > ~/id_rsa
+          export GIT_SSH_COMMAND="ssh -i ~/id_rsa"
+
+          # Copy any *.lintonly to *
+          find . -name '*.onlylint' -not -path '*.terraform*' |
+            while read _file ; do cp -av "$_file" "$( sed 's/\.onlylint$//' <<< "$_file" )" ; done
+
+          find . -name '*.tf' -not -path '*.terraform*' -printf '%h\n' |
+            sort -u |
+            while read module
+            do
+              (
+                echo -e "\n>>> Module: $module\n"
+                cd $module
+                terraform init -input=false
+                terraform validate
+              )
+            done
