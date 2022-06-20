@@ -1,0 +1,58 @@
+# This workflow creates and pushes a Git tag to mark a release.
+# It also updates the CHANGELOG.md in the root of the repository
+# with a list of the changes since previous release.
+#
+# This is done using a tool called `standard-release`.
+# More info here: https://github.com/conventional-changelog/standard-version
+
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+    paths:
+      - "**.tf"
+      - "**.yaml"
+
+jobs:
+  release:
+    name: Changelog and tag
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: install npm
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: "12"
+
+      - name: install standard-version
+        run: npm install --global standard-version
+
+      - name: git tag and changelog
+        run: |
+          # https://github.com/actions/checkout/blob/v2/README.md
+          git config --local user.name "github-action"
+          git config --local user.email "github-actions@github.com"
+
+          # if this is the first release ever in this repos, then `standard-version`
+          # needs to be run with the `--first-release` needs to be passed.
+          # Doing so will start off with creating a `v1.0.0` tag.
+          # After that, `standard-version` will just bump it.
+          #
+          # Below we determine whether the v1.0.0 tag exists or not.
+          # If it does, we've released before.
+          if git rev-parse v1.0.0 >/dev/null 2>&1
+          then
+            standard-version
+          else
+            standard-version --first-release
+          fi
+
+          git push --follow-tags
