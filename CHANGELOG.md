@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.1.1...v1.2.0) (2022-08-04)
+
+
+### Features
+
+* Grafana 9 ([#41](https://github.com/nuuday/terraform-k8s-grafana/issues/41)) ([ee8e57d](https://github.com/nuuday/terraform-k8s-grafana/commit/ee8e57dc4c156c96c3951cacb3e7e0556e87943d))
+
 ### [1.1.1](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.1.0...v1.1.1) (2022-07-04)
 
 
