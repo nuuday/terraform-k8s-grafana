@@ -47,6 +47,10 @@ locals {
     users = {
       viewers_can_edit = true
     }
+
+    feature_toggles = {
+      enable = "tempoSearch tempoBackendSearch"
+    }
   }
 
 
