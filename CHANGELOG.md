@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.2.2...v1.2.3) (2022-09-14)
+
+
+### Bug Fixes
+
+* Added lint workflow ([b1017bb](https://github.com/nuuday/terraform-k8s-grafana/commit/b1017bb550212b3e25a3ab5cbd5e4049d53e0803))
+* Updated github sources to use git::ssh://git@github.com scheme ([ff38516](https://github.com/nuuday/terraform-k8s-grafana/commit/ff38516394bb86f555b5b528eb52bebd57368efb))
+
 ### [1.2.2](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.2.1...v1.2.2) (2022-09-06)
 
 ### [1.2.1](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.2.0...v1.2.1) (2022-08-23)
