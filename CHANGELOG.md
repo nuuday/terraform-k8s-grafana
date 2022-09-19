@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.4](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.2.3...v1.2.4) (2022-09-19)
+
+
+### Bug Fixes
+
+* Grafana 9.1.4 includes a query editor fix for newer Chrome ([#44](https://github.com/nuuday/terraform-k8s-grafana/issues/44)) ([c68eeec](https://github.com/nuuday/terraform-k8s-grafana/commit/c68eeec88522a4960778e5329b9a085075038230))
+
 ### [1.2.3](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.2.2...v1.2.3) (2022-09-14)
 
 
