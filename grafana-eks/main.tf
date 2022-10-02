@@ -123,7 +123,7 @@ resource "aws_security_group_rule" "grafana-cluster-rules" {
   from_port                = 0
   protocol                 = "tcp"
   security_group_id        = aws_security_group.grafana_rds.id
-  to_port                  = module.db.this_db_instance_port
+  to_port                  = module.db.db_instance_port
   type                     = "ingress"
   source_security_group_id = var.source_security_group
 }
@@ -133,10 +133,10 @@ module "grafana" {
 
   namespace                   = local.namespace
   release_name                = local.release_name
-  database_host               = module.db.this_db_instance_address
-  database_port               = module.db.this_db_instance_port
+  database_host               = module.db.db_instance_address
+  database_port               = module.db.db_instance_port
   database_password           = random_password.grafana_db_password.result
-  database_user               = module.db.this_db_instance_username
+  database_user               = module.db.db_instance_username
   external_image_storage_type = "s3"
   external_image_storage = {
     bucket = local.bucket_name
