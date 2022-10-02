@@ -108,6 +108,7 @@ module "db" {
   backup_retention_period          = 0
   tags                             = var.tags
   enabled_cloudwatch_logs_exports  = ["postgresql", "upgrade"]
+  create_db_subnet_group           = true
   subnet_ids                       = var.database_subnets
   family                           = "postgres14"
   major_engine_version             = "14"
