@@ -90,7 +90,7 @@ resource "random_password" "grafana_db_password" {
 }
 
 module "db" {
-  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-rds?ref=v2.20.0"
+  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-rds?ref=v5.1.0"
 
   identifier                      = "grafana${random_id.grafana_rds.dec}"
   engine                          = "postgres"
