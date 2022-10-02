@@ -98,7 +98,7 @@ module "db" {
   instance_class                   = var.database_instance_type
   allocated_storage                = var.database_storage_size
   storage_encrypted                = false
-  name                             = "grafana${random_id.grafana_rds.dec}"
+  db_name                          = "grafana${random_id.grafana_rds.dec}"
   username                         = "grafana"
   password                         = random_password.grafana_db_password.result
   port                             = "5432"
