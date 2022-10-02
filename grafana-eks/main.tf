@@ -92,31 +92,31 @@ resource "random_password" "grafana_db_password" {
 module "db" {
   source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-rds?ref=v5.1.0"
 
-  identifier                      = "grafana${random_id.grafana_rds.dec}"
-  engine                          = "postgres"
-  engine_version                  = "14.2"
-  instance_class                  = var.database_instance_type
-  allocated_storage               = var.database_storage_size
-  storage_encrypted               = false
-  name                            = "grafana${random_id.grafana_rds.dec}"
-  username                        = "grafana"
-  password                        = random_password.grafana_db_password.result
-  port                            = "5432"
-  vpc_security_group_ids          = [aws_security_group.grafana_rds.id]
-  maintenance_window              = "Mon:00:00-Mon:03:00"
-  backup_window                   = "03:00-06:00"
-  backup_retention_period         = 0
-  tags                            = var.tags
-  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-  subnet_ids                      = var.database_subnets
-  family                          = "postgres14"
-  major_engine_version            = "14"
-  skip_final_snapshot             = var.database_skip_final_snapshot
-  final_snapshot_identifier       = var.database_final_snapshot_identifier
-  snapshot_identifier             = var.database_snapshot_identifier
-  deletion_protection             = false
-  auto_minor_version_upgrade      = var.database_auto_minor_version_upgrade
-  allow_major_version_upgrade     = true
+  identifier                       = "grafana${random_id.grafana_rds.dec}"
+  engine                           = "postgres"
+  engine_version                   = "14.2"
+  instance_class                   = var.database_instance_type
+  allocated_storage                = var.database_storage_size
+  storage_encrypted                = false
+  name                             = "grafana${random_id.grafana_rds.dec}"
+  username                         = "grafana"
+  password                         = random_password.grafana_db_password.result
+  port                             = "5432"
+  vpc_security_group_ids           = [aws_security_group.grafana_rds.id]
+  maintenance_window               = "Mon:00:00-Mon:03:00"
+  backup_window                    = "03:00-06:00"
+  backup_retention_period          = 0
+  tags                             = var.tags
+  enabled_cloudwatch_logs_exports  = ["postgresql", "upgrade"]
+  subnet_ids                       = var.database_subnets
+  family                           = "postgres14"
+  major_engine_version             = "14"
+  skip_final_snapshot              = var.database_skip_final_snapshot
+  final_snapshot_identifier_prefix = var.database_final_snapshot_identifier
+  snapshot_identifier              = var.database_snapshot_identifier
+  deletion_protection              = false
+  auto_minor_version_upgrade       = var.database_auto_minor_version_upgrade
+  allow_major_version_upgrade      = true
 }
 
 resource "aws_security_group_rule" "grafana-cluster-rules" {
