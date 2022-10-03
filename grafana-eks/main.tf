@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = ">=3.0,<5.0"
     }
   }
 }
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "additional" {
 }
 
 module "s3_bucket" {
-  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v2.0.0"
+  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v3.0.1"
 
   bucket_prefix       = local.bucket_prefix
   acl                 = "private"
@@ -90,40 +90,42 @@ resource "random_password" "grafana_db_password" {
 }
 
 module "db" {
-  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-rds?ref=v2.20.0"
+  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-rds?ref=v5.1.0"
 
-  identifier                      = "grafana${random_id.grafana_rds.dec}"
-  engine                          = "postgres"
-  engine_version                  = "14.2"
-  instance_class                  = var.database_instance_type
-  allocated_storage               = var.database_storage_size
-  storage_encrypted               = false
-  name                            = "grafana${random_id.grafana_rds.dec}"
-  username                        = "grafana"
-  password                        = random_password.grafana_db_password.result
-  port                            = "5432"
-  vpc_security_group_ids          = [aws_security_group.grafana_rds.id]
-  maintenance_window              = "Mon:00:00-Mon:03:00"
-  backup_window                   = "03:00-06:00"
-  backup_retention_period         = 0
-  tags                            = var.tags
-  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-  subnet_ids                      = var.database_subnets
-  family                          = "postgres14"
-  major_engine_version            = "14"
-  skip_final_snapshot             = var.database_skip_final_snapshot
-  final_snapshot_identifier       = var.database_final_snapshot_identifier
-  snapshot_identifier             = var.database_snapshot_identifier
-  deletion_protection             = false
-  auto_minor_version_upgrade      = var.database_auto_minor_version_upgrade
-  allow_major_version_upgrade     = true
+  identifier                       = "grafana${random_id.grafana_rds.dec}"
+  engine                           = "postgres"
+  engine_version                   = "14.2"
+  instance_class                   = var.database_instance_type
+  allocated_storage                = var.database_storage_size
+  storage_encrypted                = false
+  db_name                          = "grafana${random_id.grafana_rds.dec}"
+  username                         = "grafana"
+  password                         = random_password.grafana_db_password.result
+  create_random_password           = false
+  port                             = "5432"
+  vpc_security_group_ids           = [aws_security_group.grafana_rds.id]
+  maintenance_window               = "Mon:00:00-Mon:03:00"
+  backup_window                    = "03:00-06:00"
+  backup_retention_period          = 0
+  tags                             = var.tags
+  enabled_cloudwatch_logs_exports  = ["postgresql", "upgrade"]
+  create_db_subnet_group           = true
+  subnet_ids                       = var.database_subnets
+  family                           = "postgres14"
+  major_engine_version             = "14"
+  skip_final_snapshot              = var.database_skip_final_snapshot
+  final_snapshot_identifier_prefix = var.database_final_snapshot_identifier
+  snapshot_identifier              = var.database_snapshot_identifier
+  deletion_protection              = false
+  auto_minor_version_upgrade       = var.database_auto_minor_version_upgrade
+  allow_major_version_upgrade      = true
 }
 
 resource "aws_security_group_rule" "grafana-cluster-rules" {
   from_port                = 0
   protocol                 = "tcp"
   security_group_id        = aws_security_group.grafana_rds.id
-  to_port                  = module.db.this_db_instance_port
+  to_port                  = module.db.db_instance_port
   type                     = "ingress"
   source_security_group_id = var.source_security_group
 }
@@ -133,10 +135,10 @@ module "grafana" {
 
   namespace                   = local.namespace
   release_name                = local.release_name
-  database_host               = module.db.this_db_instance_address
-  database_port               = module.db.this_db_instance_port
+  database_host               = module.db.db_instance_address
+  database_port               = module.db.db_instance_port
   database_password           = random_password.grafana_db_password.result
-  database_user               = module.db.this_db_instance_username
+  database_user               = module.db.db_instance_username
   external_image_storage_type = "s3"
   external_image_storage = {
     bucket = local.bucket_name
