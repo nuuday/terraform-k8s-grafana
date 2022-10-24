@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.4.0...v1.5.0) (2022-10-24)
+
+
+### Features
+
+* **aks:** Bumped AzureRM provider from ~>2.68 to ~>3.27 ([5a243da](https://github.com/nuuday/terraform-k8s-grafana/commit/5a243da3a6d8ce6c43b7e740bf6a55a5d971bac5))
+
 ## [1.4.0](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.3.0...v1.4.0) (2022-10-19)
 
 
