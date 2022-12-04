@@ -93,6 +93,10 @@ locals {
     }
 
     "grafana.ini" = merge(local.grafana_ini, var.oauth_config)
+
+    rbac = {
+      pspEnabled = false
+    }
   }
 }
 
@@ -105,6 +109,9 @@ resource "kubernetes_namespace" "grafana" {
       "ingress-whitelist" = join(",", var.ingress_hostnames)
     }
     labels = {
+      "pod-security.kubernetes.io/warn" : "restricted"
+      "pod-security.kubernetes.io/audit" : "restricted"
+      "pod-security.kubernetes.io/enforce" : "baseline"
       "role/grafana" : "true"
       "role/system" : "true"
     }
