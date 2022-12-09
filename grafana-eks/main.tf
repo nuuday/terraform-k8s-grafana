@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "additional" {
 }
 
 module "s3_bucket" {
-  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v3.0.1"
+  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-s3-bucket?ref=v3.6.0"
 
   bucket_prefix       = local.bucket_prefix
   acl                 = "private"
