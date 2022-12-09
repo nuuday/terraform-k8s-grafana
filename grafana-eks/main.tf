@@ -20,7 +20,7 @@ data "aws_region" "grafana" {}
 data "aws_caller_identity" "grafana" {}
 
 module "iam" {
-  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-iam//modules/iam-assumable-role-with-oidc?ref=v3.6.0"
+  source = "git::ssh://git@github.com/terraform-aws-modules/terraform-aws-iam//modules/iam-assumable-role-with-oidc?ref=v5.9.1"
 
   create_role                   = true
   role_name                     = "${local.release_name}-irsa-${random_id.grafana_rds.dec}"
