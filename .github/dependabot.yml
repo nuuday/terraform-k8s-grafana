@@ -1,0 +1,15 @@
+version: 2
+
+updates:
+- package-ecosystem: terraform
+  directory: /grafana
+  schedule:
+    interval: daily
+- package-ecosystem: terraform
+  directory: /grafana-aks
+  schedule:
+    interval: daily
+- package-ecosystem: terraform
+  directory: /grafana-eks
+  schedule:
+    interval: daily
