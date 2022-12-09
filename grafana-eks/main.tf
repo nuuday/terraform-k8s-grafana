@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "grafana" {
 
 resource "aws_iam_role_policy" "grafana" {
   name = local.bucket_name
-  role = module.iam.this_iam_role_name
+  role = module.iam.iam_role_name
 
   policy = data.aws_iam_policy_document.grafana.json
 }
@@ -51,7 +51,7 @@ resource "aws_iam_role_policy" "grafana" {
 resource "aws_iam_role_policy_attachment" "additional" {
   count = length(var.additional_irsa_role_policy_arns)
 
-  role       = module.iam.this_iam_role_name
+  role       = module.iam.iam_role_name
   policy_arn = var.additional_irsa_role_policy_arns[count.index]
 }
 
@@ -144,7 +144,7 @@ module "grafana" {
     bucket = local.bucket_name
     region = module.s3_bucket.s3_bucket_region
   }
-  eks_iam_role_arn        = module.iam.this_iam_role_arn
+  eks_iam_role_arn        = module.iam.iam_role_arn
   oauth_config            = var.oauth_config
   datasources             = var.datasources
   auth_disable_login_form = var.auth_disable_login_form
