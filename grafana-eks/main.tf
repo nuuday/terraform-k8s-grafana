@@ -20,7 +20,7 @@ data "aws_region" "grafana" {}
 data "aws_caller_identity" "grafana" {}
 
 module "iam" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version = "3.6.0"
 
   create_role                   = true
@@ -57,7 +57,7 @@ resource "aws_iam_role_policy_attachment" "additional" {
 }
 
 module "s3_bucket" {
-  source = "terraform-aws-modules/s3-bucket/aws"
+  source  = "terraform-aws-modules/s3-bucket/aws"
   version = "3.6.0"
 
   bucket_prefix       = local.bucket_prefix
@@ -92,7 +92,7 @@ resource "random_password" "grafana_db_password" {
 }
 
 module "db" {
-  source = "terraform-aws-modules/rds/aws"
+  source  = "terraform-aws-modules/rds/aws"
   version = "5.2.0"
 
   identifier                       = "grafana${random_id.grafana_rds.dec}"
