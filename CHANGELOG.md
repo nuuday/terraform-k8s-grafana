@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.4](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.3...v1.5.4) (2022-12-20)
+
+
+### Bug Fixes
+
+* switch to registry paths so dependabot can check versions ([#52](https://github.com/nuuday/terraform-k8s-grafana/issues/52)) ([f792704](https://github.com/nuuday/terraform-k8s-grafana/commit/f792704b0b77f9680469b25ab4ab30ddacbb1811))
+
 ### [1.5.3](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.2...v1.5.3) (2022-12-09)
 
 ### [1.5.2](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.1...v1.5.2) (2022-12-09)
