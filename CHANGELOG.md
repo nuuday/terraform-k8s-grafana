@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.6](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.5...v1.5.6) (2022-12-22)
+
+
+### Bug Fixes
+
+* prevent public access to S3 bucket ([972d369](https://github.com/nuuday/terraform-k8s-grafana/commit/972d36989a487acd5b2e69d6d04fdd467cfef164))
+
 ### [1.5.5](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.4...v1.5.5) (2022-12-21)
 
 ### [1.5.4](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.3...v1.5.4) (2022-12-20)
