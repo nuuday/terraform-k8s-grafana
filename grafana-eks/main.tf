@@ -60,12 +60,13 @@ module "s3_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "3.6.0"
 
-  bucket_prefix       = local.bucket_prefix
-  acl                 = "private"
-  force_destroy       = true
-  block_public_acls   = true
-  block_public_policy = true
-
+  bucket_prefix           = local.bucket_prefix
+  acl                     = "private"
+  force_destroy           = true
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
   versioning = {
     enabled = false
   }
