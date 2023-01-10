@@ -21,7 +21,7 @@ data "aws_caller_identity" "grafana" {}
 
 module "iam" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version = "5.9.2"
+  version = "5.10.0"
 
   create_role                   = true
   role_name                     = "${local.release_name}-irsa-${random_id.grafana_rds.dec}"
