@@ -93,9 +93,9 @@ locals {
     }
 
     securityContext = {
-      runAsUser = 472
-      runAsGroup = 472
-      fsGroup = 472
+      runAsUser    = 472
+      runAsGroup   = 472
+      fsGroup      = 472
       runAsNonRoot = true
       seccompProfile = {
         type = "RuntimeDefault"
