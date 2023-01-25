@@ -58,7 +58,7 @@ resource "aws_iam_role_policy_attachment" "additional" {
 
 module "s3_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.6.0"
+  version = "3.6.1"
 
   bucket_prefix           = local.bucket_prefix
   acl                     = "private"
