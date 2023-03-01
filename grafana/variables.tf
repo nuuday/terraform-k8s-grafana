@@ -1,5 +1,5 @@
 variable "chart_version" {
-  default     = "6.43.5"
+  default     = "6.51.1"
   description = "Grafana version to install"
   type        = string
 }
