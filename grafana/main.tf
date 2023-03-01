@@ -57,6 +57,10 @@ locals {
   values = {
     replicas = 2
 
+    image = {
+      tag = "9.3.8"
+    }
+
     ingress = {
       enabled = var.ingress_enabled
       hosts   = var.ingress_hostnames
