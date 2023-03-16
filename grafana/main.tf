@@ -96,7 +96,28 @@ locals {
       }
     }
 
+    securityContext = {
+      runAsUser    = 472
+      runAsGroup   = 472
+      fsGroup      = 472
+      runAsNonRoot = true
+      seccompProfile = {
+        type = "RuntimeDefault"
+      }
+    }
+
+    containerSecurityContext = {
+      allowPrivilegeEscalation = false
+      capabilities = {
+        drop = ["ALL"]
+      }
+    }
+
     "grafana.ini" = merge(local.grafana_ini, var.oauth_config)
+
+    rbac = {
+      pspEnabled = false
+    }
   }
 }
 
@@ -109,6 +130,7 @@ resource "kubernetes_namespace" "grafana" {
       "ingress-whitelist" = join(",", var.ingress_hostnames)
     }
     labels = {
+      "pod-security.kubernetes.io/enforce" : "restricted"
       "role/grafana" : "true"
       "role/system" : "true"
     }
