@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.15](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.14...v1.5.15) (2023-03-29)
+
+
+### Bug Fixes
+
+* **aks:** actually use the tags provided ([#80](https://github.com/nuuday/terraform-k8s-grafana/issues/80)) ([10c3b7b](https://github.com/nuuday/terraform-k8s-grafana/commit/10c3b7b55d1e3aab612b2319e8c1d99402ca9949))
+
 ### [1.5.14](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.13...v1.5.14) (2023-03-16)
 
 ### [1.5.13](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.12...v1.5.13) (2023-03-16)
