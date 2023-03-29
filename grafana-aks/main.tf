@@ -47,6 +47,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
   name                = local.resource_name
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
+  tags                = var.tags
 
   version = "12"
 
@@ -87,6 +88,7 @@ resource "azurerm_storage_account" "this" {
   location                 = data.azurerm_resource_group.this.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  tags                     = var.tags
 }
 
 resource "azurerm_storage_container" "this" {
