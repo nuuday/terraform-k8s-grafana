@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.16](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.15...v1.5.16) (2023-04-28)
+
+
+### Bug Fixes
+
+* add pod security to grafana-createdb job ([22b1072](https://github.com/nuuday/terraform-k8s-grafana/commit/22b10728635873dd52efcfc9183d736b8ee596a6))
+
 ### [1.5.15](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.14...v1.5.15) (2023-03-29)
 
 
