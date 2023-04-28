@@ -207,8 +207,26 @@ resource "kubernetes_job" "grafana_createdb" {
             }
           }
 
+          security_context {
+            run_as_user                = 472
+            run_as_group               = 472
+            run_as_non_root            = true
+            allow_privilege_escalation = false
+            capabilities {
+              drop = ["ALL"]
+            }
+          }
+
           command = ["/bin/sh", "-c", "psql -tc \"SELECT 1 FROM pg_database WHERE datname = 'grafana'\" | grep -q 1 || psql -c 'CREATE DATABASE grafana'"]
         }
+
+        security_context {
+          run_as_non_root = true
+          seccomp_profile {
+            type = "RuntimeDefault"
+          }
+        }
+
       }
     }
   }
