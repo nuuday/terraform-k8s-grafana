@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.17](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.16...v1.5.17) (2023-05-01)
+
+
+### Bug Fixes
+
+* Bumped S3 bucket module ([e2dda22](https://github.com/nuuday/terraform-k8s-grafana/commit/e2dda2226a3e7ae9f0712199da4d3079ae97421a))
+* Removing ACL from S3 bucket ([9604065](https://github.com/nuuday/terraform-k8s-grafana/commit/9604065ba9572ac6c27f9cd831bd225cb25af2de))
+
 ### [1.5.16](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.15...v1.5.16) (2023-04-28)
 
 
