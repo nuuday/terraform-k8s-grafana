@@ -58,7 +58,7 @@ resource "aws_iam_role_policy_attachment" "additional" {
 
 module "s3_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.10.1"
+  version = "3.12.0"
 
   bucket_prefix           = local.bucket_prefix
   force_destroy           = true
