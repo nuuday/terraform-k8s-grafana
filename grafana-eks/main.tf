@@ -91,7 +91,7 @@ resource "random_password" "grafana_db_password" {
 
 module "db" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "5.2.3"
+  version = "6.1.0"
 
   identifier                       = "grafana${random_id.grafana_rds.dec}"
   engine                           = "postgres"
