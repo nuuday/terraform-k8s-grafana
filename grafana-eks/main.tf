@@ -102,6 +102,7 @@ module "db" {
   db_name                          = "grafana${random_id.grafana_rds.dec}"
   username                         = "grafana"
   password                         = random_password.grafana_db_password.result
+  manage_master_user_password      = false
   port                             = "5432"
   vpc_security_group_ids           = [aws_security_group.grafana_rds.id]
   maintenance_window               = "Mon:00:00-Mon:03:00"
