@@ -84,11 +84,6 @@ resource "aws_security_group" "grafana_rds" {
   vpc_id      = var.vpc_id
 }
 
-resource "random_password" "grafana_db_password" {
-  length  = 16
-  special = false
-}
-
 module "db" {
   source  = "terraform-aws-modules/rds/aws"
   version = "6.1.1"
@@ -101,8 +96,6 @@ module "db" {
   storage_encrypted                = false
   db_name                          = "grafana${random_id.grafana_rds.dec}"
   username                         = "grafana"
-  password                         = random_password.grafana_db_password.result
-  create_random_password           = false
   port                             = "5432"
   vpc_security_group_ids           = [aws_security_group.grafana_rds.id]
   maintenance_window               = "Mon:00:00-Mon:03:00"
