@@ -95,7 +95,7 @@ module "db" {
 
   identifier                       = "grafana${random_id.grafana_rds.dec}"
   engine                           = "postgres"
-  engine_version                   = "14.5"
+  engine_version                   = "15.3"
   instance_class                   = var.database_instance_type
   allocated_storage                = var.database_storage_size
   storage_encrypted                = false
@@ -112,8 +112,8 @@ module "db" {
   enabled_cloudwatch_logs_exports  = ["postgresql", "upgrade"]
   create_db_subnet_group           = true
   subnet_ids                       = var.database_subnets
-  family                           = "postgres14"
-  major_engine_version             = "14"
+  family                           = "postgres15"
+  major_engine_version             = "15"
   skip_final_snapshot              = var.database_skip_final_snapshot
   final_snapshot_identifier_prefix = var.database_final_snapshot_identifier
   snapshot_identifier              = var.database_snapshot_identifier
