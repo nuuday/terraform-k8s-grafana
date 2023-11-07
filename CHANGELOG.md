@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.20](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.19...v1.5.20) (2023-11-07)
+
+
+### Bug Fixes
+
+* dont manage the master password ([f2cd196](https://github.com/nuuday/terraform-k8s-grafana/commit/f2cd1967c8ceb3b3bf99137eeedae03f1e4a2873))
+* restore password ([55d6745](https://github.com/nuuday/terraform-k8s-grafana/commit/55d6745cf1041699c7c295b1f224e8c644ef968e))
+* use managed master password ([8aa1f7c](https://github.com/nuuday/terraform-k8s-grafana/commit/8aa1f7cebd1aa49b5644c1fe3c78206a97d9d649))
+
 ### [1.5.19](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.18...v1.5.19) (2023-09-04)
 
 ### [1.5.18](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.17...v1.5.18) (2023-06-14)
