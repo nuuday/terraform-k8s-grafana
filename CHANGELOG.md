@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.21](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.20...v1.5.21) (2023-11-07)
+
 ### [1.5.20](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.19...v1.5.20) (2023-11-07)
 
 
