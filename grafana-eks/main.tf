@@ -95,7 +95,7 @@ module "db" {
 
   identifier                       = "grafana${random_id.grafana_rds.dec}"
   engine                           = "postgres"
-  engine_version                   = "15.6"
+  engine_version                   = "15.7"
   instance_class                   = var.database_instance_type
   allocated_storage                = var.database_storage_size
   storage_encrypted                = false
