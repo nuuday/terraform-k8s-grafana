@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.23](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.22...v1.5.23) (2024-05-28)
+
+
+### Bug Fixes
+
+* **eks:** postgresql 15.3 is no longer supported, bump to 15.7 ([#121](https://github.com/nuuday/terraform-k8s-grafana/issues/121)) ([81c8ec1](https://github.com/nuuday/terraform-k8s-grafana/commit/81c8ec18c846710eb2221f65b601634347e283bc))
+
 ### [1.5.22](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.21...v1.5.22) (2023-11-07)
 
 ### [1.5.21](https://github.com/nuuday/terraform-k8s-grafana/compare/v1.5.20...v1.5.21) (2023-11-07)
