@@ -4,7 +4,7 @@ variable "vpc_id" {
 }
 
 variable "database_instance_type" {
-  default     = "db.t3.micro"
+  default     = "db.t4g.micro"
   description = "RDS Database instance type"
   type        = string
 }
